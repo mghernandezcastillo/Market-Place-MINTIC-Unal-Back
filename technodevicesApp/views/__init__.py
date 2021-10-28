@@ -11,5 +11,4 @@ from .categoriasListView import CategoriasListView
 from .allProductsListVIew import AllProductsListView
 from .productsUserView import ProductsUserView
 from .telefonoUpdateView import TelefonoUpdateView
-from .emailUpdateView import EmailUpdateView
 from .contactDetailsView import ContactDetailsView

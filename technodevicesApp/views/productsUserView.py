@@ -26,6 +26,7 @@ class ProductsUserDetailView(generics.ListAPIView):
         queryset = Producto.objects.filter(vendedor_id = self.request.user)
         return queryset'''
 
+from django.db.models import query
 from rest_framework import status, views, generics
 from rest_framework.response import Response
 from technodevicesApp.serializers.productSerializer import ProductSerializer
@@ -34,6 +35,7 @@ from rest_framework_simplejwt.backends import TokenBackend
 from rest_framework.permissions import IsAuthenticated
 from technodevicesApp.models.producto import Producto
 from technodevicesApp.serializers.productSerializer import ProductSerializer
+from technodevicesApp.models.account import Account
 
 
 class ProductsUserView(generics.ListAPIView):
@@ -48,6 +50,12 @@ class ProductsUserView(generics.ListAPIView):
         if valid_data['user_id'] != self.kwargs['user']:
             stringResponse = {'detail':'Unauthorized Request'}
             return Response(stringResponse, status=status.HTTP_401_UNAUTHORIZED)
+
+    
+        account = Account.objects.get(user_id= self.kwargs['user'])
+        vendedor_id = account.user_id
+        vendedor_nombre = account.name
         
-        queryset = Producto.objects.filter(vendedor_id=self.kwargs['user'])
+        
+        queryset = Producto.objects.filter(vendedor=vendedor_nombre+"-"+str(vendedor_id))
         return queryset

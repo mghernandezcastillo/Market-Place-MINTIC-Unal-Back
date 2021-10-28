@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0p*&zf-4=k*mj@+0+ff%&o+jfxg%jo3m=nyqvw08l(=vr0#(+8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 CORS_ALLOW_ALL_ORIGINS = True 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'technodevicesApp',
     'corsheaders',
     'cloudinary_storage',
+    'django_rest_passwordreset',
 ]
 
 SIMPLE_JWT = {
@@ -110,11 +111,11 @@ WSGI_APPLICATION = 'technodevicesProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',   #siempre es el mismo para postgreSQL
-        'NAME': 'd2m01fnb7kn4on',
-        'USER': 'mavhxehllumvmy',
+        'NAME': 'dc62ggrrp1cgec',
+        'USER': 'rklihfxdgcsyei',
         'PORT': '5432',
-        'HOST': 'ec2-52-6-29-180.compute-1.amazonaws.com',
-        'PASSWORD': 'a531ace5445041d8158e5565fe7f3c8dae621c20ab3206adfb62c6688413218c',
+        'HOST': 'ec2-3-226-211-228.compute-1.amazonaws.com',
+        'PASSWORD': 'bc097e5791d925c8348bbf883a76cc31a06d947ee406d5f0968afc162a056c34',
     }
     
 }
@@ -138,11 +139,25 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# longitud del token enviado por email
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomStringTokenGenerator",
+    "OPTIONS": {
+        "min_length": 5,
+        "max_length": 8
+    }
+}
+
+# tiempo de expiración del token enviado por email
+
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 24
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'UTC'
 
@@ -167,7 +182,14 @@ CLOUDINARY_STORAGE = {
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mghernandezcastillo@gmail.com'
+EMAIL_HOST_PASSWORD = 'dildaraquelcastillo'
+
+
+
 import django_heroku
 django_heroku.settings(locals())
-
-

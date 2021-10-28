@@ -5,5 +5,9 @@ class Account(models.Model):
     user = models.ForeignKey(User, related_name='account', on_delete=models.CASCADE)
     lastChangeDate = models.DateTimeField()
     isActive = models.BooleanField(default=True)
-    email = models.EmailField('Email', max_length = 100, default = "", blank = '')
     telefono = models.CharField('Telefono', max_length= 15, default = "", blank = '')
+    name = models.CharField('Name', max_length = 30)
+
+
+    def __str__(self):
+        return self.name

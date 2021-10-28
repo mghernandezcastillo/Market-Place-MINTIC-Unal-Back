@@ -8,7 +8,7 @@ class MarcaSerializer(serializers.ModelSerializer):
         fields = [ 'nombre','categoria']
 
     def to_representation(self, obj):
-        marca = Marca.objects.get(nombre=obj.nombre)
+        marca = Marca.objects.get(id=obj.id)
         return {
             'nombre': marca.nombre,
             'categoria': marca.categoria_id

@@ -41,12 +41,14 @@ class ProductCreateView(views.APIView):
             '''
 
             account = Account.objects.get(user_id= kwargs['pk'])
-            telefono = account.telefono
-            email = account.email
+            usuario = User.objects.get(id= kwargs['pk'])
+            email = usuario.email
+            nombre_vendedor = account.name
+            id_vendedor = account.user_id
 
             
 
-            producto = Producto(vendedor = self.request.user, **validated_data)
+            producto = Producto(vendedor = nombre_vendedor+"-"+str(id_vendedor), email_contacto = email, **validated_data)
             producto.save()
             serializer_response = ProductSerializer(producto)  
 

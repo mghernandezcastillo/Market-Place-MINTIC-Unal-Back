@@ -5,4 +5,3 @@ from .productImagesSerializer import ProductImageSerializer
 from .categoriaSerializer import CategoriaSerializer
 from .marcaSerializer import MarcaSerializer
 from .telefonoSerializer import TelefonoSerializer
-from .emailSerializer import EmailSerializer

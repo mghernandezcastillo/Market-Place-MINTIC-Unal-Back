@@ -4,4 +4,4 @@ from rest_framework import serializers
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['lastChangeDate', 'isActive', 'telefono', 'email']
+        fields = ['lastChangeDate', 'isActive', 'telefono', 'name']

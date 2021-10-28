@@ -4,6 +4,12 @@ from technodevicesApp import views
 from technodevicesApp.views.productsUserView import ProductsUserView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.dispatch import receiver
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 
 urlpatterns = [
     path('login/', TokenObtainPairView.as_view()),
@@ -22,8 +28,15 @@ urlpatterns = [
     path('producto/<int:pk>/', views.ProductDetailView.as_view()),
     path('productos/', views.AllProductsListView.as_view()),
     path('telefono/update/<int:pk>/', views.TelefonoUpdateView.as_view()),
-    path('email/update/<int:pk>/', views.EmailUpdateView.as_view()),
+    path('auth/reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]
 
 '''if settings.DEBUG:'''
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+    #send_mail( 'prueba de asunto', 'Este seria el mensaje.', 'mghernandezcastillo@gmail.com', ['imperiumintro@gmail.com'], fail_silently=False,)
+    #print(f"\nRecupera la contraseña del correo '{reset_password_token.user.email}' usando el token '{reset_password_token.key}' desde la API http://localhost:8000/api/auth/reset/confirm/.""\n")
+    send_mail( 'Recupera la contraseña del correo', f"\Cree una nueva contraseña del correo '{reset_password_token.user.email}' usando el token '{reset_password_token.key}' desde el siguiente http://localhost:8080/#/user/resetPasswordConfirm/""\n", 'noreply@somehost.local', [reset_password_token.user.email], fail_silently=False,)
