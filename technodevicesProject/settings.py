@@ -190,6 +190,5 @@ EMAIL_HOST_USER = 'mghernandezcastillo@gmail.com'
 EMAIL_HOST_PASSWORD = 'dildaraquelcastillo'
 
 
-
 import django_heroku
 django_heroku.settings(locals())
